@@ -3,7 +3,7 @@
 Запуск: python -m pytest test_renju_core.py -v
      або: python test_renju_core.py
 """
-
+from __future__ import annotations
 import unittest
 from renju_core import create_board, clear_board, check_board
 

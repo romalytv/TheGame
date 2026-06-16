@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 BOARD_SIZE = 19
 
 def create_board() -> list[list[int]]:
