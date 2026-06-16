@@ -1,1 +1,0 @@
-# to-do: tests for renju_io.py
