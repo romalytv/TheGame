@@ -64,16 +64,16 @@ def _is_start_of_sequence(
     board: list[list[int]],
     row: int,
     col: int,
-    dr: int,
-    dc: int,
+    delta_row: int,
+    delta_col: int,
     player: int,
 ) -> bool:
     """
     Checks that the cell (row, col) is the start of a new sequence
     (i.e., the previous cell in the opposite direction is not a stone of the same player).
     """
-    prev_r = row - dr
-    prev_c = col - dc
+    prev_r = row - delta_row
+    prev_c = col - delta_col
     if 0 <= prev_r < BOARD_SIZE and 0 <= prev_c < BOARD_SIZE:
         return board[prev_r][prev_c] != player
     return True  # вийшли за межі — це початок
