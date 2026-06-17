@@ -1,6 +1,12 @@
 from __future__ import annotations
+from enum import Enum
+
+class Players(Enum):
+    BLACK = 1
+    WHITE = 2
 
 BOARD_SIZE = 19
+WINNING_LENGTH = 5
 
 def create_board() -> list[list[int]]:
     return [[0] * BOARD_SIZE for _ in range(BOARD_SIZE)]
@@ -37,8 +43,8 @@ def _count_consecutive(
     board: list[list[int]],
     start_row: int,
     start_col: int,
-    dr: int, # delta row
-    dc: int, # delta column
+    delta_row: int,
+    delta_col: int,
     player: int,
 ) -> int:
     """
@@ -46,11 +52,11 @@ def _count_consecutive(
     starting from the cell (start_row, start_col) in the direction (dr, dc).
     """
     count = 0
-    r, c = start_row, start_col
-    while 0 <= r < BOARD_SIZE and 0 <= c < BOARD_SIZE and board[r][c] == player:
+    row, col = start_row, start_col
+    while 0 <= row < BOARD_SIZE and 0 <= col < BOARD_SIZE and board[row][col] == player:
         count += 1
-        r += dr
-        c += dc
+        row += delta_row
+        col += delta_col
     return count
 
 
@@ -81,7 +87,7 @@ def find_winner(board: list[list[int]]) -> tuple[int, int, int] | tuple[int]:
         where (row, col) are the 1-indexed coordinates of the leftmost or topmost cell.
         (0,) — if there is no winner yet.
     """
-    for player in (1, 2):  # first black, then white
+    for player in (Players.BLACK, Players.WHITE):
         for row in range(BOARD_SIZE):
             for col in range(BOARD_SIZE):
                 if board[row][col] != player:
@@ -90,7 +96,7 @@ def find_winner(board: list[list[int]]) -> tuple[int, int, int] | tuple[int]:
                     if not _is_start_of_sequence(board, row, col, dr, dc, player):
                         continue
                     length = _count_consecutive(board, row, col, dr, dc, player)
-                    if length == 5:
+                    if length == WINNING_LENGTH:
                         # Перетворюємо у 1-індексовані координати
                         return (player, row + 1, col + 1)
     return (0,)

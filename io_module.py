@@ -1,5 +1,6 @@
 import os
 
+BOARD_SIZE = 19
 
 def read_input(file_path):
     """Читає вхідний файл та парсить тест-кейси[cite: 61, 62]."""
@@ -19,7 +20,7 @@ def read_input(file_path):
 
         for _ in range(num_cases):
             board = []
-            for _ in range(19):
+            for _ in range(BOARD_SIZE):
                 row = list(map(int, lines[idx].split()))
                 board.append(row)
                 idx += 1
@@ -30,10 +31,10 @@ def read_input(file_path):
 
 def validate_board(board):
     """Перевіряє розмірність матриці 19x19 та коректність значень[cite: 62, 63]."""
-    if len(board) != 19:
+    if len(board) != BOARD_SIZE:
         return False
     for row in board:
-        if len(row) != 19:
+        if len(row) != BOARD_SIZE:
             return False
         for cell in row:
             if cell not in (0, 1, 2):
